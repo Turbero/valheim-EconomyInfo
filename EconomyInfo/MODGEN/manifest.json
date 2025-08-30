@@ -1,0 +1,9 @@
+{
+    "name": "EconomyInfo",
+    "version_number": "1.0.0",
+    "website_url": "https://github.com/Turbero/valheim-EconomyInfo",
+    "description": "Mod to show the current total amount of money in your inventory and chests.",
+    "dependencies": [
+        "denikson-BepInExPack_Valheim-5.4.2333"
+    ]
+}
