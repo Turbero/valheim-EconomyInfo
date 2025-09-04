@@ -32,7 +32,7 @@ namespace EconomyInfo.money_vendor
             storeTransform.Find("border (1)").GetComponent<RectTransform>().sizeDelta = new Vector2(40, 220);
 
             amberPanel = new VendorPanelValuable(storeTransform, "amberPanel", "amber", new Vector2(0, -15), new Vector2(20, 20), new Vector2(42, 42));
-            pearlPanel = new VendorPanelValuable(storeTransform, "pearlPanel", "AmberPearl", new Vector2(0, -60), new Vector2(8, 32));
+            pearlPanel = new VendorPanelValuable(storeTransform, "amberpearlPanel", "AmberPearl", new Vector2(0, -60), new Vector2(8, 32));
             rubyPanel = new VendorPanelValuable(storeTransform, "rubyPanel", "ruby", new Vector2(0, -105), new Vector2(20, 20), new Vector2(42, 42));
             silverNecklacePanel = new VendorPanelValuable(storeTransform, "silverNecklacePanel", "silvernecklace", new Vector2(0, -150), new Vector2(18, 20), new Vector2(46, 46));
         }
@@ -61,7 +61,7 @@ namespace EconomyInfo.money_vendor
                             totalAmber += item.m_stack * item.m_shared.m_value;
                             totalAmountAmber++;
                         }
-                        else if (item.m_shared.m_name.ToLower().Contains("AmberPearl"))
+                        else if (item.m_shared.m_name.ToLower().Contains("amberpearl"))
                         {
                             totalAmberPearl += item.m_stack * item.m_shared.m_value;
                             totalAmountAmberPearl++;
