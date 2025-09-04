@@ -56,25 +56,25 @@ namespace EconomyInfo.money_vendor
                     if (item.m_shared.m_value > 0)
                     {
                         Logger.Log("Found in player inventory: " + item.m_shared.m_name + " = " + item.m_shared.m_value);
-                        if (item.m_shared.m_name.ToLower().Contains("amber"))
-                        {
-                            totalAmber += item.m_stack * item.m_shared.m_value;
-                            totalAmountAmber++;
-                        }
-                        else if (item.m_shared.m_name.ToLower().Contains("amberpearl"))
+                        if (item.m_shared.m_name.ToLower().Contains("amberpearl"))
                         {
                             totalAmberPearl += item.m_stack * item.m_shared.m_value;
-                            totalAmountAmberPearl++;
+                            totalAmountAmberPearl += item.m_stack;
+                        }
+                        else if (item.m_shared.m_name.ToLower().Contains("amber"))
+                        {
+                            totalAmber += item.m_stack * item.m_shared.m_value;
+                            totalAmountAmber += item.m_stack;
                         }
                         else if (item.m_shared.m_name.ToLower().Contains("ruby"))
                         {
                             totalRuby += item.m_stack * item.m_shared.m_value;
-                            totalAmountRuby++;
+                            totalAmountRuby += item.m_stack;
                         }
                         else if (item.m_shared.m_name.ToLower().Contains("silvernecklace"))
                         {
                             totalSilverNecklace += item.m_stack * item.m_shared.m_value;
-                            totalAmountSilverNecklace++;
+                            totalAmountSilverNecklace += item.m_stack;
                         }
                     }
                 }
