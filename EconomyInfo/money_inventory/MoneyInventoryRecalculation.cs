@@ -3,7 +3,7 @@ using EconomyInfo.tools;
 
 namespace EconomyInfo
 {
-    public class Recalculation
+    public class MoneyInventoryRecalculation
     {
         public static void RecalculateMoneyInventoryValue()
         {

@@ -68,16 +68,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MoneyInventoryGui.cs" />
-    <Compile Include="MoneyPanel.cs" />
     <Compile Include="EconomyInfo.cs" />
-    <Compile Include="MoneyStoreGui.cs" />
-    <Compile Include="Recalculation.cs" />
+    <Compile Include="money_inventory\MoneyInventoryGui.cs" />
+    <Compile Include="money_inventory\MoneyInventoryRecalculation.cs" />
+    <Compile Include="money_inventory\MoneyPanel.cs" />
+    <Compile Include="money_vendor\MoneyStoreGui.cs" />
+    <Compile Include="money_vendor\VendorPanelValuable.cs" />
     <Compile Include="tools\ConfigurationFile.cs" />
     <Compile Include="tools\Logger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="tools\ModUtils.cs" />
-    <Compile Include="VendorPanelValuable.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="MODGEN\icon.png" />

@@ -29,7 +29,7 @@ namespace EconomyInfo
         public static void Postfix(InventoryGui __instance)
         {
             Logger.Log("Inventory opened!");
-            Recalculation.RecalculateMoneyInventoryValue();
+            MoneyInventoryRecalculation.RecalculateMoneyInventoryValue();
         }
     }
     
@@ -40,7 +40,12 @@ namespace EconomyInfo
         {
             if (__instance == Player.m_localPlayer?.GetInventory())
             {
-                Recalculation.RecalculateMoneyInventoryValue();
+                MoneyInventoryRecalculation.RecalculateMoneyInventoryValue();
+                // If trader is opened, update
+                if (GameObject.Find("Store") != null)
+                {
+                    MoneyStoreGuiShowPatch.updateValuables();
+                }
             }
         }
     }
@@ -53,7 +58,7 @@ namespace EconomyInfo
             if (__instance != null)
             {
                 Logger.Log($"Chest opened in {__instance.transform.position}!");
-                Recalculation.RecalculateCalculateChestValue(__instance);
+                MoneyInventoryRecalculation.RecalculateCalculateChestValue(__instance);
             }
         }
     }
@@ -71,7 +76,7 @@ namespace EconomyInfo
             if (__instance != null)
             {
                 Logger.Log($"Chest opened in {__instance.transform.position}!");
-                Recalculation.RecalculateCalculateChestValue(__instance);
+                MoneyInventoryRecalculation.RecalculateCalculateChestValue(__instance);
             }
         }
     }
