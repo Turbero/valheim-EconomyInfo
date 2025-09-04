@@ -30,15 +30,12 @@ namespace EconomyInfo
                 vendorPanelValuableGameObject.transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = sizeDeltaIcon.Value;
 
             //Value to 0 to start
-            vendorPanelValuableGameObject.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = "0";
+            vendorPanelValuableGameObject.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = "0 (0)";
         }
 
-        public GameObject getGameObject() { return vendorPanelValuableGameObject; }
-
-        public void updateValue(string value)
+        public void updateValue(int amount, int  value)
         {
-            //TODO
-            
+            vendorPanelValuableGameObject.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = amount + " (" + value + ")";
         }
     }
 
