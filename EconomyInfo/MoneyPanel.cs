@@ -25,8 +25,8 @@ namespace EconomyInfo
             
             // Panel
             moneyPanelGameObject = new GameObject("MoneyPanel", typeof(RectTransform));
-            moneyPanelGameObject.SetActive(false);
-            moneyPanelGameObject.transform.SetParent(parentTransform, false);
+            moneyPanelGameObject.SetActive(true);
+            moneyPanelGameObject.transform.SetParent(parentTransform);
             RectTransform panelRect = moneyPanelGameObject.GetComponent<RectTransform>();
             panelRect.sizeDelta = new Vector2(80, 64);
             if (moneyPanelType == MoneyPanelType.Inventory) 

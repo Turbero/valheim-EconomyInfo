@@ -1,5 +1,9 @@
 ### CHANGELOG
 
+## 1.1.0a
+
+* Added details of your inventory valuables in your inventory to the trader window to know what you are about to sell.
+
 ## 1.0.0
 
 Initial version:

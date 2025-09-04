@@ -1,5 +1,7 @@
+using System.Reflection;
 using HarmonyLib;
 using UnityEngine;
+using Logger = EconomyInfo.tools.Logger;
 
 namespace EconomyInfo
 {
@@ -18,6 +20,59 @@ namespace EconomyInfo
             moneyPanelInventory.getGameObject().SetActive(true);
             moneyPanelContainer = new MoneyPanel(MoneyPanel.MoneyPanelType.Container, containerPanelTransform);
             moneyPanelContainer.getGameObject().SetActive(true);
+        }
+    }
+    
+    [HarmonyPatch(typeof(InventoryGui), "Show")]
+    public class InventoryGui_Show_Patch {
+        
+        public static void Postfix(InventoryGui __instance)
+        {
+            Logger.Log("Inventory opened!");
+            Recalculation.RecalculateMoneyInventoryValue();
+        }
+    }
+    
+    [HarmonyPatch(typeof(Inventory), "Changed")]
+    class Inventory_Changed_Patch
+    {
+        public static void Postfix(Inventory __instance)
+        {
+            if (__instance == Player.m_localPlayer?.GetInventory())
+            {
+                Recalculation.RecalculateMoneyInventoryValue();
+            }
+        }
+    }
+
+    [HarmonyPatch(typeof(Container), "Interact")]
+    public class Container_Interact_Patch
+    {
+        public static void Postfix(Container __instance, Humanoid character, bool hold, bool alt, bool __result)
+        {
+            if (__instance != null)
+            {
+                Logger.Log($"Chest opened in {__instance.transform.position}!");
+                Recalculation.RecalculateCalculateChestValue(__instance);
+            }
+        }
+    }
+
+    [HarmonyPatch]
+    public class Container_Changed_patch
+    {
+        static MethodBase TargetMethod()
+        {
+            return AccessTools.Method(typeof(Container), "OnContainerChanged");
+        }
+
+        public static void Postfix(ref Container __instance)
+        {
+            if (__instance != null)
+            {
+                Logger.Log($"Chest opened in {__instance.transform.position}!");
+                Recalculation.RecalculateCalculateChestValue(__instance);
+            }
         }
     }
 }
