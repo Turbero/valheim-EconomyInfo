@@ -1,7 +1,7 @@
 using System.Reflection;
 using EconomyInfo.tools;
 
-namespace EconomyInfo
+namespace EconomyInfo.money_inventory
 {
     public class MoneyInventoryRecalculation
     {

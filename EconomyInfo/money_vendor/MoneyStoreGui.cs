@@ -2,7 +2,7 @@ using HarmonyLib;
 using UnityEngine;
 using Logger = EconomyInfo.tools.Logger;
 
-namespace EconomyInfo
+namespace EconomyInfo.money_vendor
 {
     [HarmonyPatch(typeof(StoreGui), "Show")]
     public class MoneyStoreGuiShowPatch {
@@ -95,6 +95,23 @@ namespace EconomyInfo
         {
             Logger.Log("Item sold. Recalculating...");
             MoneyStoreGuiShowPatch.updateValuables();
+        }
+    }
+    
+    [HarmonyPatch(typeof(Inventory), "Changed")]
+    class Inventory_Changed_StoreGui_Patch
+    {
+        public static void Postfix(Inventory __instance)
+        {
+            if (__instance == Player.m_localPlayer?.GetInventory())
+            {
+                // If trader is opened, update
+                if (GameObject.Find("Store") != null)
+                {
+                    Logger.Log("Inventory changed while trader opened. Recalculating...");
+                    MoneyStoreGuiShowPatch.updateValuables();
+                }
+            }
         }
     }
 }

@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-namespace EconomyInfo
+namespace EconomyInfo.money_inventory
 {
     public class MoneyPanel
     {

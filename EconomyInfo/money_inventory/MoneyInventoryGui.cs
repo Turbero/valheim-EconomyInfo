@@ -3,7 +3,7 @@ using HarmonyLib;
 using UnityEngine;
 using Logger = EconomyInfo.tools.Logger;
 
-namespace EconomyInfo
+namespace EconomyInfo.money_inventory
 {
     [HarmonyPatch(typeof(InventoryGui), "Awake")]
     public class MoneyInventoryGuiPatch {
@@ -41,11 +41,6 @@ namespace EconomyInfo
             if (__instance == Player.m_localPlayer?.GetInventory())
             {
                 MoneyInventoryRecalculation.RecalculateMoneyInventoryValue();
-                // If trader is opened, update
-                if (GameObject.Find("Store") != null)
-                {
-                    MoneyStoreGuiShowPatch.updateValuables();
-                }
             }
         }
     }

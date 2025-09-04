@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace EconomyInfo
+namespace EconomyInfo.money_vendor
 {
     public class VendorPanelValuable
     {
