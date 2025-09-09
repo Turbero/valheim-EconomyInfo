@@ -9,14 +9,14 @@ namespace EconomyInfo.money_vendor
     {
         private readonly GameObject vendorPanelValuableGameObject;
 
-        public VendorPanelValuable(Transform storeTransform, string valuableName, string spriteName, Vector2 anchoredPosition,
-            Vector2? anchoredPositionIcon = null, Vector2? sizeDeltaIcon = null)
+        public VendorPanelValuable(Transform storeTransform, string valuableName, string spriteName, bool configActive,
+            Vector2 anchoredPosition, Vector2? anchoredPositionIcon = null, Vector2? sizeDeltaIcon = null)
         {
             GameObject coins = storeTransform.Find("coins").gameObject;
             
             vendorPanelValuableGameObject = GameObject.Instantiate(coins, storeTransform);
             vendorPanelValuableGameObject.name = valuableName;
-            vendorPanelValuableGameObject.SetActive(true);
+            vendorPanelValuableGameObject.SetActive(configActive);
             vendorPanelValuableGameObject.GetComponent<RectTransform>().anchoredPosition = anchoredPosition;
             vendorPanelValuableGameObject.transform.GetChild(0).name = "icon";
             vendorPanelValuableGameObject.transform.GetChild(1).name = "amount";
@@ -36,6 +36,11 @@ namespace EconomyInfo.money_vendor
         public void updateValue(int amount, int  value)
         {
             vendorPanelValuableGameObject.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = amount + " (" + value + ")";
+        }
+
+        public GameObject getMainPanel()
+        {
+            return vendorPanelValuableGameObject; 
         }
     }
 

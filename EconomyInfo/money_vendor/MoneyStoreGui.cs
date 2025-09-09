@@ -1,3 +1,4 @@
+using EconomyInfo.tools;
 using HarmonyLib;
 using UnityEngine;
 using Logger = EconomyInfo.tools.Logger;
@@ -11,18 +12,40 @@ namespace EconomyInfo.money_vendor
         private static VendorPanelValuable amberPanel;
         private static VendorPanelValuable pearlPanel;
         private static VendorPanelValuable silverNecklacePanel;
-        
-        private static bool resized = false;
-        
-        public static void Postfix(StoreGui __instance, Trader trader)
+
+        private static bool panelsCreated = false;
+
+        public static void enable(bool enable)
         {
-            if (!resized)
+            if (enable)
             {
                 resize();
-                resized = true;
             }
+            else
+            {
+                Transform storeTransform = GameObject.Find("Store").transform;
+                storeTransform.Find("border (1)").GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
+                storeTransform.Find("border (1)").GetComponent<RectTransform>().sizeDelta = new Vector2(40, 40);
+                enableValuablePanels(false);
+            }
+        }
 
-            updateValuables();
+        public static void Postfix(StoreGui __instance, Trader trader)
+        {
+            bool configActive = ConfigurationFile.advancedVendorMoneyPanel.Value;
+            if (!panelsCreated)
+            {
+                Transform storeTransform = GameObject.Find("Store").transform;
+                amberPanel = new VendorPanelValuable(storeTransform, "amberPanel", "amber", configActive, new Vector2(0, -15), new Vector2(20, 20), new Vector2(42, 42));
+                pearlPanel = new VendorPanelValuable(storeTransform, "amberpearlPanel", "AmberPearl", configActive, new Vector2(0, -60), new Vector2(8, 32));
+                rubyPanel = new VendorPanelValuable(storeTransform, "rubyPanel", "ruby", configActive, new Vector2(0, -105), new Vector2(20, 20), new Vector2(42, 42));
+                silverNecklacePanel = new VendorPanelValuable(storeTransform, "silverNecklacePanel", "silvernecklace", configActive, new Vector2(0, -150), new Vector2(18, 20), new Vector2(46, 46));
+            }
+            if (configActive)
+            {
+                resize();
+                updateValuables();
+            }
         }
 
         private static void resize()
@@ -30,11 +53,15 @@ namespace EconomyInfo.money_vendor
             Transform storeTransform = GameObject.Find("Store").transform;
             storeTransform.Find("border (1)").GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -90);
             storeTransform.Find("border (1)").GetComponent<RectTransform>().sizeDelta = new Vector2(40, 220);
+            enableValuablePanels(true);
+        }
 
-            amberPanel = new VendorPanelValuable(storeTransform, "amberPanel", "amber", new Vector2(0, -15), new Vector2(20, 20), new Vector2(42, 42));
-            pearlPanel = new VendorPanelValuable(storeTransform, "amberpearlPanel", "AmberPearl", new Vector2(0, -60), new Vector2(8, 32));
-            rubyPanel = new VendorPanelValuable(storeTransform, "rubyPanel", "ruby", new Vector2(0, -105), new Vector2(20, 20), new Vector2(42, 42));
-            silverNecklacePanel = new VendorPanelValuable(storeTransform, "silverNecklacePanel", "silvernecklace", new Vector2(0, -150), new Vector2(18, 20), new Vector2(46, 46));
+        private static void enableValuablePanels(bool enable)
+        {
+            amberPanel.getMainPanel().SetActive(enable);
+            pearlPanel.getMainPanel().SetActive(enable);
+            rubyPanel.getMainPanel().SetActive(enable);
+            silverNecklacePanel.getMainPanel().SetActive(enable);
         }
 
         public static void updateValuables()
