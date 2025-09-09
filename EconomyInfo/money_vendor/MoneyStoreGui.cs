@@ -1,5 +1,6 @@
 using EconomyInfo.tools;
 using HarmonyLib;
+using TMPro;
 using UnityEngine;
 using Logger = EconomyInfo.tools.Logger;
 
@@ -40,11 +41,13 @@ namespace EconomyInfo.money_vendor
                 pearlPanel = new VendorPanelValuable(storeTransform, "amberpearlPanel", "AmberPearl", configActive, new Vector2(0, -60), new Vector2(8, 32));
                 rubyPanel = new VendorPanelValuable(storeTransform, "rubyPanel", "ruby", configActive, new Vector2(0, -105), new Vector2(20, 20), new Vector2(42, 42));
                 silverNecklacePanel = new VendorPanelValuable(storeTransform, "silverNecklacePanel", "silvernecklace", configActive, new Vector2(0, -150), new Vector2(18, 20), new Vector2(46, 46));
+                panelsCreated = true;
             }
             if (configActive)
             {
                 resize();
                 updateValuables();
+                updateCoinsColor();     
             }
         }
 
@@ -111,6 +114,26 @@ namespace EconomyInfo.money_vendor
             pearlPanel.updateValue(totalAmountAmberPearl, totalAmberPearl);
             rubyPanel.updateValue(totalAmountRuby, totalRuby);
             silverNecklacePanel.updateValue(totalAmountSilverNecklace, totalSilverNecklace);
+            
+            //Update coins color
+            updateCoinsColor();
+        }
+
+        public static void updateCoinsColor()
+        {
+            Transform coinsValueTransform = GameObject.Find("Store").transform.Find("coins").transform.Find("coins");
+            TextMeshProUGUI coinsValueText = coinsValueTransform.GetComponent<TextMeshProUGUI>();
+            
+            int value = Player.m_localPlayer.GetInventory().CountItems(StoreGui.instance.m_coinPrefab.m_itemData.m_shared.m_name);
+            Logger.Log("Value to calculate color: "+value);
+            if (value == 0)
+            {
+                coinsValueText.faceColor = new Color(255, 0, 0, 255); 
+            }
+            else
+            {
+                coinsValueText.faceColor = new Color(255, 255, 255, 255);
+            }
         }
     }
 
@@ -122,6 +145,17 @@ namespace EconomyInfo.money_vendor
         {
             Logger.Log("Item sold. Recalculating...");
             MoneyStoreGuiShowPatch.updateValuables();
+        }
+    }
+    
+    [HarmonyPatch(typeof(StoreGui), "OnBuyItem")]
+    public class MoneyStoreGuiOnBuyItemPatch
+    {
+
+        public static void Postfix(StoreGui __instance)
+        {
+            Logger.Log("Item bought. Recalculating...");
+            MoneyStoreGuiShowPatch.updateCoinsColor();
         }
     }
     
@@ -137,6 +171,7 @@ namespace EconomyInfo.money_vendor
                 {
                     Logger.Log("Inventory changed while trader opened. Recalculating...");
                     MoneyStoreGuiShowPatch.updateValuables();
+                    MoneyStoreGuiShowPatch.updateCoinsColor();
                 }
             }
         }

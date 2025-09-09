@@ -36,6 +36,16 @@ namespace EconomyInfo.money_vendor
         public void updateValue(int amount, int  value)
         {
             vendorPanelValuableGameObject.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = amount + " (" + value + ")";
+            if (amount == 0)
+            {
+                vendorPanelValuableGameObject.transform.GetChild(1).GetComponent<TextMeshProUGUI>().faceColor =
+                    new Color(255, 0, 0, 255);
+            }
+            else
+            {
+                vendorPanelValuableGameObject.transform.GetChild(1).GetComponent<TextMeshProUGUI>().faceColor =
+                    new Color(255, 255, 255, 255);
+            }
         }
 
         public GameObject getMainPanel()
