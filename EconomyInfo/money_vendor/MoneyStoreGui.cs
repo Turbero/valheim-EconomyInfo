@@ -21,6 +21,7 @@ namespace EconomyInfo.money_vendor
             if (enable)
             {
                 resize();
+                updateValuables();
             }
             else
             {
@@ -29,6 +30,7 @@ namespace EconomyInfo.money_vendor
                 storeTransform.Find("border (1)").GetComponent<RectTransform>().sizeDelta = new Vector2(40, 40);
                 enableValuablePanels(false);
             }
+            updateCoinsColor();
         }
 
         public static void Postfix(StoreGui __instance, Trader trader)
@@ -126,7 +128,8 @@ namespace EconomyInfo.money_vendor
             
             int value = Player.m_localPlayer.GetInventory().CountItems(StoreGui.instance.m_coinPrefab.m_itemData.m_shared.m_name);
             Logger.Log("Value to calculate color: "+value);
-            if (value == 0)
+            
+            if (value == 0 && ConfigurationFile.advancedVendorMoneyPanel.Value)
             {
                 coinsValueText.faceColor = new Color(255, 0, 0, 255); 
             }
