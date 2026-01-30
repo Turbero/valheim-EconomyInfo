@@ -34,7 +34,7 @@ namespace EconomyInfo.money_inventory
             else if (moneyPanelType == MoneyPanelType.Container) 
                 panelRect.anchoredPosition = new Vector2(319, -30);
 
-            // print in UI after Weight to have same effect of partially hidde under the inventory
+            // print in UI after Weight to have same effect of partially hidden under the inventory
             moneyPanelGameObject.transform.SetSiblingIndex(weightTransform.GetSiblingIndex() + 1); // other children are moved automatically, csharp magic!
 
             moneyPanelBackground();

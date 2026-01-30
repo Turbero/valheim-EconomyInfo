@@ -1,4 +1,5 @@
 using System.Reflection;
+using EconomyInfo.tools;
 using HarmonyLib;
 using UnityEngine;
 using Logger = EconomyInfo.tools.Logger;
@@ -17,9 +18,9 @@ namespace EconomyInfo.money_inventory
             Transform containerPanelTransform = InventoryGui.instance.m_inventoryRoot.transform.Find("Container");
             
             moneyPanelInventory = new MoneyPanel(MoneyPanel.MoneyPanelType.Inventory, inventoryPanelTransform);
-            moneyPanelInventory.getGameObject().SetActive(true);
+            moneyPanelInventory.getGameObject().SetActive(ConfigurationFile.showInventoryMoneyBalance.Value);
             moneyPanelContainer = new MoneyPanel(MoneyPanel.MoneyPanelType.Container, containerPanelTransform);
-            moneyPanelContainer.getGameObject().SetActive(true);
+            moneyPanelContainer.getGameObject().SetActive(ConfigurationFile.showContainerMoneyBalance.Value);
         }
     }
     
