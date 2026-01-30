@@ -1,5 +1,4 @@
-﻿using System.Reflection;
-using BepInEx;
+﻿using BepInEx;
 using EconomyInfo.tools;
 using HarmonyLib;
 
@@ -10,7 +9,7 @@ namespace EconomyInfo
     {
         public const string GUID = "Turbero.EconomyInfo";
         public const string NAME = "Economy Info";
-        public const string VERSION = "1.1.1";
+        public const string VERSION = "1.1.2";
         private readonly Harmony harmony = new Harmony(GUID);
         void Awake()
         {

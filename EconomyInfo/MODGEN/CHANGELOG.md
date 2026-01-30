@@ -1,5 +1,9 @@
 ### CHANGELOG
 
+## 1.1.2
+
+* Added config options to show/hide the inventory and container money balance (default=true) in case of other mods are using that space and want to give priority to them.
+
 ## 1.1.1
 
 * When the player has 0 coins or 0 items of a valuable this is shown in red in the vendor panel details
