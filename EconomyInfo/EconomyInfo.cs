@@ -9,7 +9,7 @@ namespace EconomyInfo
     {
         public const string GUID = "Turbero.EconomyInfo";
         public const string NAME = "Economy Info";
-        public const string VERSION = "1.1.2";
+        public const string VERSION = "1.1.3";
         private readonly Harmony harmony = new Harmony(GUID);
         void Awake()
         {
