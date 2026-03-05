@@ -1,3 +1,4 @@
+using System.Reflection;
 using EconomyInfo.tools;
 using HarmonyLib;
 using TMPro;
@@ -6,6 +7,20 @@ using Logger = EconomyInfo.tools.Logger;
 
 namespace EconomyInfo.money_vendor
 {
+    public static class TraderChecks {
+        public static bool HasStoreGuiValidTrader()
+        {
+            Trader trader = (Trader) typeof(StoreGui).GetField("m_trader", BindingFlags.Instance | BindingFlags.NonPublic)?.GetValue(StoreGui.instance);
+            if (trader == null)
+            {
+                Logger.Log("Null trader");
+                return false;
+            }
+            Logger.Log("Trader.m_name: "+trader?.m_name);
+            return true;
+        }
+    }
+    
     [HarmonyPatch(typeof(StoreGui), "Show")]
     public class MoneyStoreGuiShowPatch {
         
@@ -35,7 +50,17 @@ namespace EconomyInfo.money_vendor
 
         public static void Postfix(StoreGui __instance, Trader trader)
         {
+            Logger.Log("Trader.m_name: "+trader?.m_name);
+            if (trader == null)
+            {
+                Logger.Log("Null trader");
+                return;
+            }
+
             bool configActive = ConfigurationFile.advancedVendorMoneyPanel.Value;
+            if (!configActive)
+                return;
+            
             if (!panelsCreated)
             {
                 Transform storeTransform = GameObject.Find("Store").transform;
@@ -45,20 +70,20 @@ namespace EconomyInfo.money_vendor
                 silverNecklacePanel = new VendorPanelValuable(storeTransform, "silverNecklacePanel", "silvernecklace", configActive, new Vector2(0, -150), new Vector2(18, 20), new Vector2(46, 46));
                 panelsCreated = true;
             }
-            if (configActive)
-            {
-                resize();
-                updateValuables();
-                updateCoinsColor();     
-            }
+            resize();
+            updateValuables();
+            updateCoinsColor();
         }
 
         private static void resize()
         {
-            Transform storeTransform = GameObject.Find("Store").transform;
-            storeTransform.Find("border (1)").GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -90);
-            storeTransform.Find("border (1)").GetComponent<RectTransform>().sizeDelta = new Vector2(40, 220);
-            enableValuablePanels(true);
+            Transform storeTransform = GameObject.Find("Store")?.transform;
+            if (storeTransform != null)
+            {
+                storeTransform.Find("border (1)").GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -90);
+                storeTransform.Find("border (1)").GetComponent<RectTransform>().sizeDelta = new Vector2(40, 220);
+                enableValuablePanels(true);
+            }
         }
 
         private static void enableValuablePanels(bool enable)
@@ -143,9 +168,9 @@ namespace EconomyInfo.money_vendor
     [HarmonyPatch(typeof(StoreGui), "OnSellItem")]
     public class MoneyStoreGuiOnSellItemPatch
     {
-
         public static void Postfix(StoreGui __instance)
         {
+            if (!TraderChecks.HasStoreGuiValidTrader()) return;
             Logger.Log("Item sold. Recalculating...");
             MoneyStoreGuiShowPatch.updateValuables();
         }
@@ -157,6 +182,7 @@ namespace EconomyInfo.money_vendor
 
         public static void Postfix(StoreGui __instance)
         {
+            if (!TraderChecks.HasStoreGuiValidTrader()) return;
             Logger.Log("Item bought. Recalculating...");
             MoneyStoreGuiShowPatch.updateCoinsColor();
         }
@@ -170,6 +196,7 @@ namespace EconomyInfo.money_vendor
             if (__instance == Player.m_localPlayer?.GetInventory())
             {
                 // If trader is opened, update
+                if (!TraderChecks.HasStoreGuiValidTrader()) return;
                 if (GameObject.Find("Store") != null)
                 {
                     Logger.Log("Inventory changed while trader opened. Recalculating...");
