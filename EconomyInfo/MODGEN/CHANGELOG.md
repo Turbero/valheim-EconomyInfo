@@ -2,7 +2,7 @@
 
 ## 1.1.3
 
-* Fixed added for others mods compatibility using StoreGui interface.
+* Fix added for others mods compatibility using StoreGui interface.
 
 ## 1.1.2
 
