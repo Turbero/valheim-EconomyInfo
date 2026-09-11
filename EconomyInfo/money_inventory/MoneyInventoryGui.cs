@@ -15,7 +15,7 @@ namespace EconomyInfo.money_inventory
         public static void Postfix(InventoryGui __instance)
         {
             Transform inventoryPanelTransform = InventoryGui.instance.m_inventoryRoot.transform.Find("Player");
-            Transform containerPanelTransform = InventoryGui.instance.m_inventoryRoot.transform.Find("Container");
+            Transform containerPanelTransform = InventoryGui.instance.m_inventoryRoot.transform.Find("Player").transform.Find("Container");
             
             moneyPanelInventory = new MoneyPanel(MoneyPanel.MoneyPanelType.Inventory, inventoryPanelTransform);
             moneyPanelInventory.getGameObject().SetActive(ConfigurationFile.showInventoryMoneyBalance.Value);
@@ -59,15 +59,10 @@ namespace EconomyInfo.money_inventory
         }
     }
 
-    [HarmonyPatch]
+    [HarmonyPatch(typeof(Container), "OnContainerChanged")]
     public class Container_Changed_patch
     {
-        static MethodBase TargetMethod()
-        {
-            return AccessTools.Method(typeof(Container), "OnContainerChanged");
-        }
-
-        public static void Postfix(ref Container __instance)
+        public static void Postfix(Container __instance)
         {
             if (__instance != null)
             {
