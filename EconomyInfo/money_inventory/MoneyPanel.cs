@@ -18,10 +18,7 @@ namespace EconomyInfo.money_inventory
 
         public MoneyPanel(MoneyPanelType moneyPanelType, Transform parentTransform)
         {
-            if (moneyPanelType == MoneyPanelType.Inventory)
-                weightTransform = InventoryGui.instance.m_inventoryRoot.transform.Find("Player").transform.Find("Weight");
-            else
-                weightTransform = InventoryGui.instance.m_inventoryRoot.transform.Find("Container").transform.Find("Weight");
+            weightTransform = parentTransform.transform.Find("Weight");
             
             // Panel
             moneyPanelGameObject = new GameObject("MoneyPanel", typeof(RectTransform));

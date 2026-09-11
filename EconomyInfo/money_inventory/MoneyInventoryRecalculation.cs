@@ -26,8 +26,6 @@ namespace EconomyInfo.money_inventory
         
         public static void RecalculateCalculateChestValue(Container chest)
         {
-            if (chest == null) return;
-
             int total = 0;
 
             var field = typeof(Container).GetField("m_inventory", BindingFlags.NonPublic | BindingFlags.Instance);
