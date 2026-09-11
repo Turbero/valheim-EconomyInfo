@@ -1,9 +1,9 @@
 {
     "name": "EconomyInfo",
-    "version_number": "1.1.3",
+    "version_number": "1.1.4",
     "website_url": "https://github.com/Turbero/valheim-EconomyInfo",
     "description": "Mod to show the current total amount of money in your inventory and your inventory valuables in the trader window.",
     "dependencies": [
-        "denikson-BepInExPack_Valheim-5.4.2333"
+        "denikson-BepInExPack_Valheim-5.4.2350"
     ]
 }

@@ -1,5 +1,9 @@
 ### CHANGELOG
 
+## 1.1.4
+
+* Compatibility with version 1.0
+
 ## 1.1.3
 
 * Fix added for others mods compatibility using StoreGui interface.
