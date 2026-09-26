@@ -84,6 +84,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="MODGEN\icon.png" />
+    <Content Include="MODGEN\icon_old.png" />
     <Content Include="pdb2mdb.exe" />
   </ItemGroup>
   <ItemGroup>
