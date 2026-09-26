@@ -4,7 +4,7 @@ The Economy Info mod allows players to see their total amount of money in their 
 
 ![](https://i.imgur.com/D3xUcfV.png)
 
-![](https://i.imgur.com/vaa39DL.png)
+![](https://i.imgur.com/KRPnKCZ.png)
 
 ## About myself
 
