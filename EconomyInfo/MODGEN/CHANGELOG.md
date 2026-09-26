@@ -3,6 +3,7 @@
 ## 1.2.0
 
 * Added new valuables from Deep North to the vendor panel
+* Icon updated
 * Fixed issue when joining a world with advanced vendor window disabled and later it's re-enabled in-game
 
 ## 1.1.4
