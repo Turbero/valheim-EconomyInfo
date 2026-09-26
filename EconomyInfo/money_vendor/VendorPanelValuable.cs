@@ -31,6 +31,20 @@ namespace EconomyInfo.money_vendor
 
             //Value to 0 to start
             vendorPanelValuableGameObject.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = "0 (0)";
+
+            //SellButton
+            var sellButton = GameObject.Instantiate(GameObject.Find("SellPanel"), vendorPanelValuableGameObject.transform);
+            sellButton.name = "SellPanel";
+            sellButton.SetActive(false); //FIXME
+            sellButton.GetComponent<RectTransform>().sizeDelta = new Vector2(32, 32); //smaller button
+            sellButton.transform.Find("SellButton/Image").GetComponent<RectTransform>().sizeDelta = new Vector2(32, 32); //smaller coin icon
+            sellButton.GetComponent<Image>().sprite = null; //empty background button
+            Button buttonSellButton = sellButton.GetComponentInChildren<Button>();
+            buttonSellButton.onClick = new Button.ButtonClickedEvent();
+            buttonSellButton.onClick.AddListener(() =>
+            {
+                //TODO
+            });
         }
 
         public void updateValue(int amount, int  value)
