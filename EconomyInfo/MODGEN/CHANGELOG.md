@@ -1,10 +1,18 @@
 ### CHANGELOG
 
+## 1.3.0
+
+* Enhances in advanced vendor window:
+  * Added individual buttons with tooltip names for each valuable to sell in any order you want, not what the game order dictates
+  * Button tooltips don't show the item to sell until the player has discovered it, to avoid any spoilers
+  * Icon sizes adjusted and aligned
+* Fixed issue when logging out a world to the title screen and then going back to it
+
 ## 1.2.0
 
 * Added new valuables from Deep North to the vendor panel
-* Icon updated
-* Fixed issue when joining a world with advanced vendor window disabled and later it's re-enabled in-game
+* Mod Icon updated
+* Fixed issue when joining a world with advanced vendor window disabled and later re-enabled in-game
 
 ## 1.1.4
 

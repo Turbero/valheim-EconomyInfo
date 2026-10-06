@@ -17,7 +17,7 @@ namespace EconomyInfo
             harmony.PatchAll();
         }
 
-        void onDestroy()
+        void onDestroy() 
         {
             harmony.UnpatchSelf();
         }
