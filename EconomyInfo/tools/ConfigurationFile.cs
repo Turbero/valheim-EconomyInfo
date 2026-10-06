@@ -61,8 +61,8 @@ namespace EconomyInfo.tools
         private static void SettingsChanged(object sender, EventArgs e)
         {
             if (GameObject.Find("Store") != null) MoneyStoreGuiShowPatch.enable(advancedVendorMoneyPanel.Value);
-            MoneyInventoryGuiPatch.moneyPanelInventory.getGameObject().SetActive(showInventoryMoneyBalance.Value);
-            MoneyInventoryGuiPatch.moneyPanelContainer.getGameObject().SetActive(showContainerMoneyBalance.Value);
+            InventoryGui_Show_Patch.moneyPanelInventory.getGameObject()?.SetActive(showInventoryMoneyBalance.Value);
+            InventoryGui_Show_Patch.moneyPanelContainer.getGameObject()?.SetActive(showContainerMoneyBalance.Value);
         }
     }
 }

@@ -18,7 +18,29 @@ namespace EconomyInfo.money_vendor
             return true;
         }
     }
-    
+
+    [HarmonyPatch(typeof(StoreGui), "GetSellableItem")]
+    public class MoneyStoreGuiSelectedItemPatch
+    {
+        public static string lastValuableToSell;
+        public static void Postfix(StoreGui __instance, ref ItemDrop.ItemData __result)
+        {
+            if (lastValuableToSell != null)
+            {
+                foreach (ItemDrop.ItemData itemData in Player.m_localPlayer.GetInventory().GetAllItems())
+                {
+                    if (itemData.m_shared.m_name == lastValuableToSell)
+                    {
+                        Logger.Log(lastValuableToSell+" found in inventory to sell!");
+                        __result = itemData;
+                        return;
+                    }
+                }
+                __result = null; // we don't sell anything
+            }
+        }
+    }
+
     [HarmonyPatch(typeof(StoreGui), "Show")]
     public class MoneyStoreGuiShowPatch {
         
@@ -32,6 +54,17 @@ namespace EconomyInfo.money_vendor
         private static VendorPanelValuable veydrisPanel;
 
         private static bool panelsCreated = false;
+
+        public static void Postfix(StoreGui __instance, Trader trader)
+        {
+            if (trader == null)
+                return;
+
+            Logger.Log("Trader.m_name: "+trader.m_name);
+            
+            createPanels();
+            enable(ConfigurationFile.advancedVendorMoneyPanel.Value);
+        }
 
         public static void enable(bool enable)
         {
@@ -51,47 +84,35 @@ namespace EconomyInfo.money_vendor
             updateCoinsColor();
         }
 
-        public static void Postfix(StoreGui __instance, Trader trader)
-        {
-            if (trader == null)
-                return;
-
-            Logger.Log("Trader.m_name: "+trader.m_name);
-            
-            createPanels();
-            enable(ConfigurationFile.advancedVendorMoneyPanel.Value);
-        }
-
         private static void resize()
         {
             Transform storeTransform = GameObject.Find("Store")?.transform;
             if (storeTransform != null)
             {
                 storeTransform.Find("border (1)").GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -90);
-                storeTransform.Find("border (1)").GetComponent<RectTransform>().sizeDelta = new Vector2(140, 220);
-                storeTransform.Find("SellPanel").GetComponent<RectTransform>().anchoredPosition = new Vector2(400, 20);
+                storeTransform.Find("border (1)").GetComponent<RectTransform>().sizeDelta = new Vector2(200, 220);
+                storeTransform.Find("SellPanel").GetComponent<RectTransform>().anchoredPosition = new Vector2(430, 20);
                 enableValuablePanels(true);
             }
         }
 
         private static void createPanels()
         {
-            bool configActive = ConfigurationFile.advancedVendorMoneyPanel.Value;
-            if (!configActive)
+            if (!ConfigurationFile.advancedVendorMoneyPanel.Value)
                 return;
 
-            if (panelsCreated && amberPanel != null) return;
+            if (panelsCreated && amberPanel != null && amberPanel.getMainPanel() != null) return;
             
             Transform storeTransform = GameObject.Find("Store").transform;
-            amberPanel = new VendorPanelValuable(storeTransform, "amberPanel", "amber", configActive, new Vector2(-75, -15), new Vector2(20, 20), new Vector2(42, 42));
-            pearlPanel = new VendorPanelValuable(storeTransform, "amberpearlPanel", "AmberPearl", configActive, new Vector2(-75, -60), new Vector2(8, 32));
-            rubyPanel = new VendorPanelValuable(storeTransform, "rubyPanel", "ruby", configActive, new Vector2(-75, -105), new Vector2(20, 20), new Vector2(42, 42));
-            silverNecklacePanel = new VendorPanelValuable(storeTransform, "silverNecklacePanel", "silvernecklace", configActive, new Vector2(-75, -150), new Vector2(18, 20), new Vector2(46, 46));
+            amberPanel = new VendorPanelValuable(storeTransform, "amberPanel", "amber", new Vector2(-110, -15), new Vector2(20, 20), new Vector2(42, 42));
+            pearlPanel = new VendorPanelValuable(storeTransform, "amberpearlPanel", "AmberPearl", new Vector2(-110, -60), new Vector2(8, 32));
+            rubyPanel = new VendorPanelValuable(storeTransform, "rubyPanel", "ruby", new Vector2(-110, -105), new Vector2(20, 20), new Vector2(42, 42));
+            silverNecklacePanel = new VendorPanelValuable(storeTransform, "silverNecklacePanel", "silvernecklace", new Vector2(-110, -150), new Vector2(18, 20), new Vector2(46, 46));
                 
-            draumyxPanel = new VendorPanelValuable(storeTransform, "draumyxPanel", "ancientgemstone_black", configActive, new Vector2(110, -15), new Vector2(20, 20), new Vector2(42, 42));
-            grimvarnPanel = new VendorPanelValuable(storeTransform, "grimvarnPanel", "ancientgemstone_green", configActive, new Vector2(110, -60), new Vector2(8, 32));
-            solrythPanel = new VendorPanelValuable(storeTransform, "solrythPanel", "ancientgemstone_orange", configActive, new Vector2(110, -105), new Vector2(20, 20), new Vector2(42, 42));
-            veydrisPanel = new VendorPanelValuable(storeTransform, "veydrisPanel", "ancientgemstone_purple", configActive, new Vector2(110, -150), new Vector2(18, 20), new Vector2(46, 46));
+            draumyxPanel = new VendorPanelValuable(storeTransform, "draumyxPanel", "ancientgemstone_black", new Vector2(100, -15), new Vector2(20, 20), new Vector2(42, 42));
+            grimvarnPanel = new VendorPanelValuable(storeTransform, "grimvarnPanel", "ancientgemstone_green", new Vector2(100, -60), new Vector2(20, 20), new Vector2(42, 42));
+            solrythPanel = new VendorPanelValuable(storeTransform, "solrythPanel", "ancientgemstone_orange", new Vector2(100, -105), new Vector2(20, 20), new Vector2(42, 42));
+            veydrisPanel = new VendorPanelValuable(storeTransform, "veydrisPanel", "ancientgemstone_purple", new Vector2(100, -150), new Vector2(20, 20), new Vector2(42, 42));
                 
             panelsCreated = true;
         }

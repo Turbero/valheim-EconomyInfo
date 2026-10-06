@@ -7,6 +7,7 @@ namespace EconomyInfo.money_inventory
     {
         public static void RecalculateMoneyInventoryValue()
         {
+            if (InventoryGui_Show_Patch.moneyPanelInventory == null) return;
             int total = 0;
 
             if (Player.m_localPlayer != null)
@@ -21,11 +22,12 @@ namespace EconomyInfo.money_inventory
                 }
             }
 
-            MoneyInventoryGuiPatch.moneyPanelInventory.updateMoneyValue(total.ToString());
+            InventoryGui_Show_Patch.moneyPanelInventory.updateMoneyValue(total.ToString());
         }
         
         public static void RecalculateCalculateChestValue(Container chest)
         {
+            if (InventoryGui_Show_Patch.moneyPanelContainer == null) return;
             int total = 0;
 
             var field = typeof(Container).GetField("m_inventory", BindingFlags.NonPublic | BindingFlags.Instance);
@@ -39,7 +41,7 @@ namespace EconomyInfo.money_inventory
                 }
             }
 
-            MoneyInventoryGuiPatch.moneyPanelContainer.updateMoneyValue(total.ToString());
+            InventoryGui_Show_Patch.moneyPanelContainer.updateMoneyValue(total.ToString());
         }
     }
 }

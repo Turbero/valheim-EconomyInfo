@@ -1,4 +1,3 @@
-using System.Reflection;
 using EconomyInfo.tools;
 using HarmonyLib;
 using UnityEngine;
@@ -6,30 +5,25 @@ using Logger = EconomyInfo.tools.Logger;
 
 namespace EconomyInfo.money_inventory
 {
-    [HarmonyPatch(typeof(InventoryGui), "Awake")]
-    public class MoneyInventoryGuiPatch {
+    [HarmonyPatch(typeof(InventoryGui), "Show")]
+    public class InventoryGui_Show_Patch {
         
         public static MoneyPanel moneyPanelInventory;
         public static MoneyPanel moneyPanelContainer;
         
         public static void Postfix(InventoryGui __instance)
         {
-            Transform inventoryPanelTransform = InventoryGui.instance.m_inventoryRoot.transform.Find("Player");
-            Transform containerPanelTransform = InventoryGui.instance.m_inventoryRoot.transform.Find("Player").transform.Find("Container");
-            
-            moneyPanelInventory = new MoneyPanel(MoneyPanel.MoneyPanelType.Inventory, inventoryPanelTransform);
-            moneyPanelInventory.getGameObject().SetActive(ConfigurationFile.showInventoryMoneyBalance.Value);
-            moneyPanelContainer = new MoneyPanel(MoneyPanel.MoneyPanelType.Container, containerPanelTransform);
-            moneyPanelContainer.getGameObject().SetActive(ConfigurationFile.showContainerMoneyBalance.Value);
-        }
-    }
-    
-    [HarmonyPatch(typeof(InventoryGui), "Show")]
-    public class InventoryGui_Show_Patch {
-        
-        public static void Postfix(InventoryGui __instance)
-        {
             Logger.Log("Inventory opened!");
+            if (moneyPanelInventory == null) 
+            {
+                Transform inventoryPanelTransform = InventoryGui.instance.m_inventoryRoot.transform.Find("Player");
+                Transform containerPanelTransform = InventoryGui.instance.m_inventoryRoot.transform.Find("Player").transform.Find("Container");
+                
+                moneyPanelInventory = new MoneyPanel(MoneyPanel.MoneyPanelType.Inventory, inventoryPanelTransform);
+                moneyPanelInventory.getGameObject().SetActive(ConfigurationFile.showInventoryMoneyBalance.Value);
+                moneyPanelContainer = new MoneyPanel(MoneyPanel.MoneyPanelType.Container, containerPanelTransform);
+                moneyPanelContainer.getGameObject().SetActive(ConfigurationFile.showContainerMoneyBalance.Value);
+            }
             MoneyInventoryRecalculation.RecalculateMoneyInventoryValue();
         }
     }

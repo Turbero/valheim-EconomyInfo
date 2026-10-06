@@ -1,6 +1,7 @@
 ﻿using HarmonyLib;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 
 namespace EconomyInfo.tools
@@ -30,6 +31,11 @@ namespace EconomyInfo.tools
             }
 
             return cachedSprites.GetValueSafe(name);
+        }
+        
+        public static void RunPrivateMethod(object obj, string name, object[] parameters = null, BindingFlags bindingAttr = BindingFlags.Instance | BindingFlags.NonPublic)
+        {
+            obj.GetType().GetMethod(name, bindingAttr)?.Invoke(obj, parameters);
         }
     }
 }
