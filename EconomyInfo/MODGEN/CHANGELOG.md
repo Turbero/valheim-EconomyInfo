@@ -1,5 +1,9 @@
 ### CHANGELOG
 
+## 1.3.1
+
+* Fixed issues when changing .cfg file and accessing ui elements on the screen before being painted
+
 ## 1.3.0
 
 * Enhances in advanced vendor window:
@@ -7,6 +11,10 @@
   * Button tooltips don't show the item to sell until the player has discovered it, to avoid any spoilers
   * Icon sizes adjusted and aligned
 * Fixed issue when logging out a world to the title screen and then going back to it
+
+## 1.2.1
+
+* TODO: Added individual buttons for each valuable to sell in any order you want, not what the game order dictates
 
 ## 1.2.0
 
