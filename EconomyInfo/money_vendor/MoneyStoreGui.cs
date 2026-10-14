@@ -53,7 +53,7 @@ namespace EconomyInfo.money_vendor
         private static VendorPanelValuable solrythPanel;
         private static VendorPanelValuable veydrisPanel;
 
-        private static bool panelsCreated = false;
+        public static bool panelsCreated = false;
 
         public static void Postfix(StoreGui __instance, Trader trader)
         {
@@ -264,7 +264,7 @@ namespace EconomyInfo.money_vendor
             {
                 // If trader is opened, update
                 if (!TraderChecks.HasStoreGuiValidTrader()) return;
-                if (GameObject.Find("Store") != null)
+                if (GameObject.Find("Store") != null && MoneyStoreGuiShowPatch.panelsCreated)
                 {
                     Logger.Log("Inventory changed while trader opened. Recalculating...");
                     MoneyStoreGuiShowPatch.updateValuables();
