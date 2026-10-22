@@ -10,6 +10,7 @@ namespace EconomyInfo.money_vendor
         private readonly GameObject vendorPanelValuableGO;
         private readonly UITooltip sellButtonTooltip;
         private readonly string spriteName;
+        private readonly Button buttonSellButton; 
         
         public VendorPanelValuable(Transform storeTransform, string valuableName, string spriteName,
             Vector2 anchoredPosition, Vector2? anchoredPositionIcon = null, Vector2? sizeDeltaIcon = null)
@@ -50,13 +51,14 @@ namespace EconomyInfo.money_vendor
             sellButton.transform.Find("Image").GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -3.5f); //centered smaller coin icon
             sellButtonTooltip = sellButton.GetComponent<UITooltip>(); 
             updateTooltip();
-            Button buttonSellButton = sellPanel.GetComponentInChildren<Button>();
+            buttonSellButton = sellPanel.GetComponentInChildren<Button>();
             buttonSellButton.onClick = new Button.ButtonClickedEvent();
             buttonSellButton.onClick.AddListener(() =>
             {
                 MoneyStoreGuiSelectedItemPatch.lastValuableToSell = "$item_"+spriteName.ToLowerInvariant();
                 ModUtils.RunPrivateMethod(StoreGui.instance, "SellItem"); 
                 MoneyStoreGuiSelectedItemPatch.lastValuableToSell = null;
+                buttonSellButton.interactable = false;
             });
         }
 
@@ -68,6 +70,7 @@ namespace EconomyInfo.money_vendor
                 ? new Color(255, 0, 0, 255)
                 : new Color(255, 255, 255, 255);
             updateTooltip();
+            buttonSellButton.interactable = amount > 0;
         }
         
         private void updateTooltip() 
