@@ -1,5 +1,9 @@
 ### CHANGELOG
 
+## 1.3.2
+
+* Fix to update sell buttons status of trader valuables advanced window properly after receiving or selling something 
+
 ## 1.3.1
 
 * Fixed issues when changing .cfg file and accessing ui elements on the screen before being painted
