@@ -76,6 +76,8 @@ namespace EconomyInfo.money_vendor
         private void updateTooltip() 
         {
             var itemName = "$item_" + spriteName.ToLowerInvariant();
+            if (itemName.Contains("coin_ancient"))
+                itemName = "$item_ancientcoin";
             sellButtonTooltip.m_text = Player.m_localPlayer.IsKnownMaterial(itemName)
                 ? "$store_sell " + itemName
                 : "???";

@@ -48,10 +48,11 @@ namespace EconomyInfo.money_vendor
         private static VendorPanelValuable amberPanel;
         private static VendorPanelValuable pearlPanel;
         private static VendorPanelValuable silverNecklacePanel;
-        private static VendorPanelValuable draumyxPanel;
+        private static VendorPanelValuable ancientCoinPanel;
         private static VendorPanelValuable grimvarnPanel;
         private static VendorPanelValuable solrythPanel;
         private static VendorPanelValuable veydrisPanel;
+        private static VendorPanelValuable draumyxPanel;
 
         public static bool panelsCreated = false;
 
@@ -68,14 +69,17 @@ namespace EconomyInfo.money_vendor
 
         public static void enable(bool enable)
         {
+            Transform storeTransform = GameObject.Find("Store").transform;
+            Vector2 coinsAnchoredPosition = storeTransform.Find("coins").GetComponent<RectTransform>().anchoredPosition;
             if (enable)
             {
                 resize();
                 updateValuables();
+                storeTransform.Find("coins").GetComponent<RectTransform>().anchoredPosition = new Vector2(-110, coinsAnchoredPosition.y);
             }
             else
             {
-                Transform storeTransform = GameObject.Find("Store").transform;
+                storeTransform.Find("coins").GetComponent<RectTransform>().anchoredPosition = new Vector2(0, coinsAnchoredPosition.y);
                 storeTransform.Find("border (1)").GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
                 storeTransform.Find("border (1)").GetComponent<RectTransform>().sizeDelta = new Vector2(40, 40);
                 storeTransform.Find("SellPanel").GetComponent<RectTransform>().anchoredPosition = new Vector2(350, -16);
@@ -108,11 +112,12 @@ namespace EconomyInfo.money_vendor
             pearlPanel = new VendorPanelValuable(storeTransform, "amberpearlPanel", "AmberPearl", new Vector2(-110, -60), new Vector2(8, 32));
             rubyPanel = new VendorPanelValuable(storeTransform, "rubyPanel", "ruby", new Vector2(-110, -105), new Vector2(20, 20), new Vector2(42, 42));
             silverNecklacePanel = new VendorPanelValuable(storeTransform, "silverNecklacePanel", "silvernecklace", new Vector2(-110, -150), new Vector2(18, 20), new Vector2(46, 46));
-                
-            draumyxPanel = new VendorPanelValuable(storeTransform, "draumyxPanel", "ancientgemstone_black", new Vector2(100, -15), new Vector2(20, 20), new Vector2(42, 42));
-            grimvarnPanel = new VendorPanelValuable(storeTransform, "grimvarnPanel", "ancientgemstone_green", new Vector2(100, -60), new Vector2(20, 20), new Vector2(42, 42));
-            solrythPanel = new VendorPanelValuable(storeTransform, "solrythPanel", "ancientgemstone_orange", new Vector2(100, -105), new Vector2(20, 20), new Vector2(42, 42));
-            veydrisPanel = new VendorPanelValuable(storeTransform, "veydrisPanel", "ancientgemstone_purple", new Vector2(100, -150), new Vector2(20, 20), new Vector2(42, 42));
+            
+            ancientCoinPanel = new VendorPanelValuable(storeTransform, "ancientCoinPanel", "coin_ancient", new Vector2(100, 30), new Vector2(20, 20), new Vector2(42, 42));
+            grimvarnPanel = new VendorPanelValuable(storeTransform, "grimvarnPanel", "ancientgemstone_green", new Vector2(100, -15), new Vector2(20, 20), new Vector2(42, 42));
+            solrythPanel = new VendorPanelValuable(storeTransform, "solrythPanel", "ancientgemstone_orange", new Vector2(100, -60), new Vector2(20, 20), new Vector2(42, 42));
+            veydrisPanel = new VendorPanelValuable(storeTransform, "veydrisPanel", "ancientgemstone_purple", new Vector2(100, -105), new Vector2(20, 20), new Vector2(42, 42));
+            draumyxPanel = new VendorPanelValuable(storeTransform, "draumyxPanel", "ancientgemstone_black", new Vector2(100, -150), new Vector2(20, 20), new Vector2(42, 42));
                 
             panelsCreated = true;
         }
@@ -126,10 +131,11 @@ namespace EconomyInfo.money_vendor
             pearlPanel.getMainPanel().SetActive(enable);
             rubyPanel.getMainPanel().SetActive(enable);
             silverNecklacePanel.getMainPanel().SetActive(enable);
-            draumyxPanel.getMainPanel().SetActive(enable);
+            ancientCoinPanel.getMainPanel().SetActive(enable);
             grimvarnPanel.getMainPanel().SetActive(enable);
             solrythPanel.getMainPanel().SetActive(enable);
             veydrisPanel.getMainPanel().SetActive(enable);
+            draumyxPanel.getMainPanel().SetActive(enable);
         }
 
         public static void updateValuables()
@@ -138,20 +144,22 @@ namespace EconomyInfo.money_vendor
             int totalAmberPearl = 0;
             int totalRuby = 0;
             int totalSilverNecklace = 0;
-            int totalDraumyx = 0;
+            int totalAncientCoin = 0;
             int totalGrimvarn = 0;
             int totalSolryth = 0;
             int totalVeydris = 0;
+            int totalDraumyx = 0;
 
 
             int totalAmountAmber = 0;
             int totalAmountAmberPearl = 0;
             int totalAmountRuby = 0;
             int totalAmountSilverNecklace = 0;
-            int totalAmountDraumyx = 0;
+            int totalAmountAncientCoin = 0;
             int totalAmountGrimvarn = 0;
             int totalAmountSolryth = 0;
             int totalAmountVeydris = 0;
+            int totalAmountDraumyx = 0;
 
             if (Player.m_localPlayer != null)
             {
@@ -180,10 +188,10 @@ namespace EconomyInfo.money_vendor
                             totalSilverNecklace += item.m_stack * item.m_shared.m_value;
                             totalAmountSilverNecklace += item.m_stack;
                         }
-                        else if (item.m_shared.m_name.ToLower().Contains("ancientgemstone_black"))
+                        else if (item.m_shared.m_name.ToLower().Contains("ancientcoin"))
                         {
-                            totalDraumyx += item.m_stack * item.m_shared.m_value;
-                            totalAmountDraumyx += item.m_stack;
+                            totalAncientCoin += item.m_stack * item.m_shared.m_value;
+                            totalAmountAncientCoin += item.m_stack;
                         }
                         else if (item.m_shared.m_name.ToLower().Contains("ancientgemstone_green"))
                         {
@@ -200,6 +208,11 @@ namespace EconomyInfo.money_vendor
                             totalVeydris += item.m_stack * item.m_shared.m_value;
                             totalAmountVeydris += item.m_stack;
                         }
+                        else if (item.m_shared.m_name.ToLower().Contains("ancientgemstone_black"))
+                        {
+                            totalDraumyx += item.m_stack * item.m_shared.m_value;
+                            totalAmountDraumyx += item.m_stack;
+                        }
                     }
                 }
             }
@@ -208,10 +221,11 @@ namespace EconomyInfo.money_vendor
             pearlPanel.updateValue(totalAmountAmberPearl, totalAmberPearl);
             rubyPanel.updateValue(totalAmountRuby, totalRuby);
             silverNecklacePanel.updateValue(totalAmountSilverNecklace, totalSilverNecklace);
-            draumyxPanel.updateValue(totalAmountDraumyx, totalDraumyx);
+            ancientCoinPanel.updateValue(totalAmountAncientCoin, totalAncientCoin);
             grimvarnPanel.updateValue(totalAmountGrimvarn, totalGrimvarn);
             solrythPanel.updateValue(totalAmountSolryth, totalSolryth);
             veydrisPanel.updateValue(totalAmountVeydris, totalVeydris);
+            draumyxPanel.updateValue(totalAmountDraumyx, totalDraumyx);
             
             //Update coins color
             updateCoinsColor();
