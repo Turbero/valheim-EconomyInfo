@@ -1,5 +1,10 @@
 ### CHANGELOG
 
+## 1.3.3
+
+* Added "Ancient Coin" to trader advanced window
+* Deep north valuables sorted by value from up to bottom in the trader advanced window
+
 ## 1.3.2
 
 * Fix to update sell buttons status of trader valuables advanced window properly after receiving or selling something 
@@ -15,10 +20,6 @@
   * Button tooltips don't show the item to sell until the player has discovered it, to avoid any spoilers
   * Icon sizes adjusted and aligned
 * Fixed issue when logging out a world to the title screen and then going back to it
-
-## 1.2.1
-
-* TODO: Added individual buttons for each valuable to sell in any order you want, not what the game order dictates
 
 ## 1.2.0
 
