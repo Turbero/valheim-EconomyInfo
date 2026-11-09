@@ -1,5 +1,9 @@
 ### CHANGELOG
 
+## 1.3.4
+
+* Small reposition of ancient coin in vendor advanced window to avoid displacing gold coins
+
 ## 1.3.3
 
 * Added "Ancient Coin" to trader advanced window
