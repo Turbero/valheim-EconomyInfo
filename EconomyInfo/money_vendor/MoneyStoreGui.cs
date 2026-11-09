@@ -70,16 +70,13 @@ namespace EconomyInfo.money_vendor
         public static void enable(bool enable)
         {
             Transform storeTransform = GameObject.Find("Store").transform;
-            Vector2 coinsAnchoredPosition = storeTransform.Find("coins").GetComponent<RectTransform>().anchoredPosition;
             if (enable)
             {
                 resize();
                 updateValuables();
-                storeTransform.Find("coins").GetComponent<RectTransform>().anchoredPosition = new Vector2(-110, coinsAnchoredPosition.y);
             }
             else
             {
-                storeTransform.Find("coins").GetComponent<RectTransform>().anchoredPosition = new Vector2(0, coinsAnchoredPosition.y);
                 storeTransform.Find("border (1)").GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
                 storeTransform.Find("border (1)").GetComponent<RectTransform>().sizeDelta = new Vector2(40, 40);
                 storeTransform.Find("SellPanel").GetComponent<RectTransform>().anchoredPosition = new Vector2(350, -16);
@@ -93,8 +90,8 @@ namespace EconomyInfo.money_vendor
             Transform storeTransform = GameObject.Find("Store")?.transform;
             if (storeTransform != null)
             {
-                storeTransform.Find("border (1)").GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -90);
-                storeTransform.Find("border (1)").GetComponent<RectTransform>().sizeDelta = new Vector2(200, 220);
+                storeTransform.Find("border (1)").GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -100);
+                storeTransform.Find("border (1)").GetComponent<RectTransform>().sizeDelta = new Vector2(200, 260);
                 storeTransform.Find("SellPanel").GetComponent<RectTransform>().anchoredPosition = new Vector2(430, 20);
                 enableValuablePanels(true);
             }
@@ -113,7 +110,7 @@ namespace EconomyInfo.money_vendor
             rubyPanel = new VendorPanelValuable(storeTransform, "rubyPanel", "ruby", new Vector2(-110, -105), new Vector2(20, 20), new Vector2(42, 42));
             silverNecklacePanel = new VendorPanelValuable(storeTransform, "silverNecklacePanel", "silvernecklace", new Vector2(-110, -150), new Vector2(18, 20), new Vector2(46, 46));
             
-            ancientCoinPanel = new VendorPanelValuable(storeTransform, "ancientCoinPanel", "coin_ancient", new Vector2(100, 30), new Vector2(20, 20), new Vector2(42, 42));
+            ancientCoinPanel = new VendorPanelValuable(storeTransform, "ancientCoinPanel", "coin_ancient", new Vector2(0, -192), new Vector2(20, 20), new Vector2(42, 42));
             grimvarnPanel = new VendorPanelValuable(storeTransform, "grimvarnPanel", "ancientgemstone_green", new Vector2(100, -15), new Vector2(20, 20), new Vector2(42, 42));
             solrythPanel = new VendorPanelValuable(storeTransform, "solrythPanel", "ancientgemstone_orange", new Vector2(100, -60), new Vector2(20, 20), new Vector2(42, 42));
             veydrisPanel = new VendorPanelValuable(storeTransform, "veydrisPanel", "ancientgemstone_purple", new Vector2(100, -105), new Vector2(20, 20), new Vector2(42, 42));
